@@ -1,8 +1,6 @@
 module github.com/cloudwego/eino
 
-go 1.21
-
-toolchain go1.24.0
+go 1.24.3
 
 require (
 	github.com/bytedance/sonic v1.14.1
