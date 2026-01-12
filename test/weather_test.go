@@ -233,7 +233,7 @@ func TestWeather(t *testing.T) {
 	)
 
 	client := openai.NewClient(
-		option.WithAPIKey("sk-7b62eeed42bb4466b360f438a47db83d"),
+		option.WithAPIKey(""),
 		option.WithBaseURL("https://api.deepseek.com"),
 	)
 
