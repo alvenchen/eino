@@ -169,7 +169,7 @@ func TestGraph(t *testing.T) {
 	// 9. 运行测试
 	out, err := compiledGraph.Invoke(ctx, map[string]any{
 		"context":  "weather information",
-		"question": "shenzhen's weather tody",
+		"question": "eino和langchain比怎么样？",
 	})
 
 	if err != nil {
