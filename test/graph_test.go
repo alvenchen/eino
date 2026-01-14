@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"path/filepath"
-	"strings"
 	"testing"
 
 	"github.com/cloudwego/eino/components/prompt"
@@ -17,55 +15,6 @@ import (
 	"github.com/openai/openai-go/option"
 	"github.com/stretchr/testify/assert"
 )
-
-func loadEnv() {
-	// 查找项目根目录（包含 go.mod 文件的目录）
-	wd, err := os.Getwd()
-	if err != nil {
-		return
-	}
-
-	// 向上查找 go.mod 文件
-	dir := wd
-	for {
-		goModPath := filepath.Join(dir, "go.mod")
-		if _, err := os.Stat(goModPath); err == nil {
-			// 找到项目根目录，加载 .env 文件
-			envPath := filepath.Join(dir, ".env")
-			if _, err := os.Stat(envPath); err == nil {
-				content, err := os.ReadFile(envPath)
-				if err != nil {
-					return
-				}
-				// 简单的解析：key=value格式
-				lines := string(content)
-				for _, line := range strings.Split(lines, "\n") {
-					line = strings.TrimSpace(line)
-					if line == "" || strings.HasPrefix(line, "#") {
-						continue
-					}
-					parts := strings.SplitN(line, "=", 2)
-					if len(parts) == 2 {
-						key := strings.TrimSpace(parts[0])
-						value := strings.TrimSpace(parts[1])
-						if os.Getenv(key) == "" {
-							os.Setenv(key, value)
-						}
-					}
-				}
-			}
-			return
-		}
-
-		// 向上移动一级目录
-		parent := filepath.Dir(dir)
-		if parent == dir {
-			// 到达文件系统根目录
-			break
-		}
-		dir = parent
-	}
-}
 
 func TestGraph(t *testing.T) {
 	ctx := context.Background()
